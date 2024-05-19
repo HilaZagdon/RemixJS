@@ -1,15 +1,21 @@
-import { Link } from '@remix-run/react';
-
-export default function Index() {
+import React from "react";
+function HelloWorld() {
   return (
-    <main className="text-center text-primary-10">
-      <h1 className="text-3xl font-bold">A better way of keeping track of your notes</h1>
-      <p className="mt-4">Try our early beta and never lose track of your notes again!</p>
-      <p id="cta" className="mt-8">
-        <Link to="/notes" className="bg-secondary-100 text-primary-800 py-2 px-4 rounded hover:bg-secondary-200">
-          Try Now!
-        </Link>
-      </p>
-    </main>
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg">
+        <h1 className="text-4xl font-bold text-primary-700 mb-4">Hello, World!</h1>
+        <p className="text-lg text-gray-700 mb-6">This is a simple example of a React component styled with Tailwind CSS.</p>
+        <div className="flex space-x-4">
+          <button className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Click Me
+          </button>
+          <button className="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Or Me
+          </button>
+        </div>
+        <p className="text-gray-500 mt-4">Enjoy building with Tailwind CSS!</p>
+      </div>
+    </div>
   );
 }
+export default HelloWorld;
