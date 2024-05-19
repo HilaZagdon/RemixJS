@@ -124,9 +124,7 @@ function handleBrowserRequest(
         },
         onError(error) {
           responseStatusCode = 500;
-          // Log streaming rendering errors from inside the shell.  Don't log
-          // errors encountered during initial shell rendering since they'll
-          // reject and get logged in handleDocumentRequest.
+
           if (shellRendered) {
             console.error(error);
           }
@@ -137,3 +135,21 @@ function handleBrowserRequest(
     setTimeout(abort, ABORT_DELAY);
   });
 }
+
+
+// import mongoose from 'mongoose';
+
+
+
+// const MONGODB_URL = process.env.MONGODB_URL;
+// mongoose.connect(process.env.MONGODB_URI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+
+// const db = mongoose.connection;
+
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// db.once('open', () => {
+//   console.log('Connected to MongoDB');
+// });

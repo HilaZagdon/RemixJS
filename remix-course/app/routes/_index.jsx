@@ -1,21 +1,63 @@
-import React from "react";
-function HelloWorld() {
+import React, { useState } from "react";
+
+function ClientForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Add logic to submit form data to backend API
+    console.log("Form submitted:", formData);
+    // Reset form fields
+    setFormData({
+      name: "",
+      email: "",
+    });
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg">
-        <h1 className="text-4xl font-bold text-primary-700 mb-4">Hello, World!</h1>
-        <p className="text-lg text-gray-700 mb-6">This is a simple example of a React component styled with Tailwind CSS.</p>
-        <div className="flex space-x-4">
-          <button className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Click Me
-          </button>
-          <button className="bg-secondary-500 hover:bg-secondary-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Or Me
-          </button>
-        </div>
-        <p className="text-gray-500 mt-4">Enjoy building with Tailwind CSS!</p>
+    <form method="POST" onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+      <div className="mb-4">
+        <label htmlFor="name" className="block text-gray-700">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+          className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        />
       </div>
-    </div>
+      <div className="mb-4">
+        <label htmlFor="email" className="block text-gray-700">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        />
+      </div>
+      <button type="submit" className="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Add Client</button>
+    </form>
   );
 }
-export default HelloWorld;
+
+// export async function action {
+
+// }
+
+export default ClientForm;
+
