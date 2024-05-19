@@ -1,19 +1,15 @@
 import { Link } from '@remix-run/react';
 
-import homeStyles from '~/styles/home.css';
-
 export default function Index() {
   return (
-    <main id="content">
-      <h1>A better way of keeping track of your notes</h1>
-      <p>Try our early beta and never loose track of your notes again!</p>
-      <p id="cta">
-        <Link to="/notes">Try Now!</Link>
+    <main className="text-center text-primary-10">
+      <h1 className="text-3xl font-bold">A better way of keeping track of your notes</h1>
+      <p className="mt-4">Try our early beta and never lose track of your notes again!</p>
+      <p id="cta" className="mt-8">
+        <Link to="/notes" className="bg-secondary-100 text-primary-800 py-2 px-4 rounded hover:bg-secondary-200">
+          Try Now!
+        </Link>
       </p>
     </main>
   );
-}
-
-export function links() {
-  return [{ rel: 'stylesheet', href: homeStyles }];
 }

@@ -1,12 +1,18 @@
 import {
   Links,
+  LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import tailwindStyles from "./styles/tailwind.css"; // Import Tailwind CSS
 
-export function Layout({ children }) {
+export const links = () => {
+  return [{ rel: "stylesheet", href: tailwindStyles }];
+};
+
+export default function Root() {
   return (
     <html lang="en">
       <head>
@@ -16,21 +22,11 @@ export function Layout({ children }) {
         <Links />
       </head>
       <body>
-        {children}
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
+        <LiveReload />
       </body>
     </html>
   );
 }
-
-export default function App() {
-  return <Outlet />;
-}
-
-
-export function links() {
-   return [
-    {rel: 'stylesheet', href: styles}
-   ];
- }
