@@ -1,61 +1,44 @@
 import React, { useState } from "react";
 import { useFetcher } from "@remix-run/react";
+import ClientForm from "../components/ClientForm";
+import { json, redirect } from "@remix-run/node";
+// import Client from "~/models/Client";
+// import { connectToDatabase } from "../../utils/db.server";
+import { MongoClient } from "mongodb"
 
-
-function ClientForm() {
-  const fetcher = useFetcher();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    fetcher.submit(formData, { method: "post", action: "/api/clients" });
-    setFormData({
-      name: "",
-      email: "",
-    });
-  };
+function Clients() {
 
   return (
-    <form method="post" onSubmit={handleSubmit} className="font-Poetsen max-w-md mx-auto mt-8">
-      <div className="mb-4">
-        <label htmlFor="name" className="block text-gray-700">Name:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-[#9DDE8B]"
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="email" className="block text-gray-700">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-[#9DDE8B]"
-        />
-      </div>
-      <div className="flex justify-center">
-        <button type="submit" className="bg-[#9DDE8B] text-white py-2 px-4 rounded-md hover:bg-[#628b56] focus:outline-none focus:bg-[#628b56]">Add Client</button>
-      </div>
-    </form>
+   <ClientForm/>
   );
 }
 
-export default ClientForm;
+
+
+const MONGODB_URL="mongodb+srv://hilatoar:1Qazse45!@petcare.cp8i9lx.mongodb.net/?retryWrites=true&w=majority&appName=PetCare"
+  const MONGODB_DB_NAME = "PetCare"; 
+  const COLLECTION_NAME = "Clients"; 
+  const client = new MongoClient(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+
+export async function action({request}){
+const formData = await request.formData();
+const name = formData.get('name');
+const email = formData.get('email');
+
+const newClient = new Client({name, email});
+try{
+  await client.connect()
+  const db = client.db(MONGODB_DB_NAME)
+  const collection = db.collection(COLLECTION_NAME)
+  await collection.insertOne(newClient)
+  return redirect("/Clients")
+}
+catch{
+  console.log(err)
+}
+finally {
+  await client.close();
+}
+}
+
+export default Clients;
